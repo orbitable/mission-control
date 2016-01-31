@@ -1,0 +1,19 @@
+{
+  "name": "mission-control",
+  "version": "0.0.0",
+  "description": "A back end server for orchestrating n-body simulations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/orbitable/mission-control.git"
+  },
+  "author": "",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/orbitable/mission-control/issues"
+  },
+  "homepage": "https://github.com/orbitable/mission-control#readme"
+}

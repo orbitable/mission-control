@@ -1,2 +1,10 @@
-# mission-control
-A server component for managing n-body simulation data.
+# mission-control 
+
+> A web application orchestrating n-body simulations
+
+A web application that provides access to n-body simulations.
+
+## Usage Instructions
+
+> TODO: Add instructions on how to use the library
+
