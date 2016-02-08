@@ -6,5 +6,7 @@ A web application that provides access to n-body simulations.
 
 ## Usage Instructions
 
-> TODO: Add instructions on how to use the library
+```
+node --harmony app.js
+```
 
