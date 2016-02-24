@@ -3,6 +3,9 @@
   "version": "0.0.0",
   "description": "A back end server for orchestrating n-body simulations",
   "main": "app.js",
+  "scripts": {
+    "test": "node --harmony test"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/orbitable/mission-control.git"
@@ -14,7 +17,7 @@
   },
   "homepage": "https://github.com/orbitable/mission-control#readme",
   "dependencies": {
-    "mongoose": "^4.4.3",
+    "mongoose": "4.4.3",
     "total.js": "^1.9.6"
   }
 }
