@@ -1,0 +1,3 @@
+mongopath     : mongodb://mongodb.orbitable.tech/default
+default-ip    : 0.0.0.0
+default-port  : 8001
