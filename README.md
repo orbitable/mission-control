@@ -11,8 +11,8 @@ Ensure all dependencies are installed:
 npm install
 ```
 
-Run the debug server:
+Run the server locally:
 ```
-node --harmony app.js
+node --harmony debug.js
 ```
 
