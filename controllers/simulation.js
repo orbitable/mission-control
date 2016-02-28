@@ -1,7 +1,7 @@
 var util = require('util');
 
 exports.install = function() {
-  F.restful('/simulations', [], simulation_query, simulation_get, simulation_save, simulation_delete);
+  F.restful('/simulations', ['#cors'], simulation_query, simulation_get, simulation_save, simulation_delete);
 };
 
 function simulation_query() {
