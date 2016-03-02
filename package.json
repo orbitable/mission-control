@@ -11,8 +11,8 @@
     "type": "git",
     "url": "git+https://github.com/orbitable/mission-control.git"
   },
-  "author": "",
-  "license": "UNLICENSED",
+  "license": "Apache-2.0",
+  "contributors": ["Benjamin Campbell <benji@benjica.com>"],
   "bugs": {
     "url": "https://github.com/orbitable/mission-control/issues"
   },
