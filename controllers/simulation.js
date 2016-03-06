@@ -33,8 +33,10 @@ function simulation_delete(id) {
       return;
     }
 
-    self.throw404();
+    return self.throw404();
   });
+
+  return self.throw404();
 }
 
 function simulation_get(id) {
@@ -90,22 +92,29 @@ function simulation_save(id) {
   var Simulation = MODEL('simulation').schema;
 
   if (id) {
-    // TODO: Implement record updating
-    logger.warn("Updating a simulation is not implementend"); 
-    self.throw501();
-    return;
+    var updates = self.json;
+    logger.debug("Updating a simulation with id %s", id);
+
+    Simulation.findByIdAndUpdate(id, { $set: updates }, function(err, doc) {
+      if (err) {
+        logger.error("Unable to update simulation: %s", id, update);
+      }
+
+      self.json(doc);
+    });
+  } else {
+
+    logger.debug("Saving simulation id " + id);
+
+    Simulation.create(self.body, function(err, doc) {
+
+      if (err) {
+        logger.error("Unable to create simulation: " + err);
+        self.throw400(err);
+        return;
+      }
+
+      self.json(doc);
+    });
   }
-
-  logger.debug("Saving simulation id " + id);
-
-  Simulation.create(self.body, function(err, doc) {
-
-    if (err) {
-      logger.error("Unable to create simulation: " + err);
-      self.throw400(err);
-      return;
-    }
-
-    self.json(doc);
-  });
 }
