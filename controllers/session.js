@@ -48,17 +48,17 @@ function session_post(id) {
   logger.debug("entered logging statement");
 
   if (id) {
-    var updates = {Username:"DummyUN", Password:"DummyPW"};
+    
     logger.debug("Updating a session with id %s", id);
 
-    //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
-
-      self.json(updates);
     }
    else {
 
     logger.debug("Saving session id " + id);
-
+       
+    var updates = {Username:"DummyUN", Password:"DummyPW"};
+       
+    self.json(updates);
     // else portion
 
       
