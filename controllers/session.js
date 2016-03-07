@@ -18,21 +18,20 @@ exports.install = function() {
   logger.debug("Installing session restful route");
 
   
-  F.restful('/session', [], session_query, session_post, session_delete);
+  F.restful('/session', [], session_query, session_delete, session_post);
 };
-
-function session_delete(id) {
-  logger.debug("Removing session " + id);
-    var self = this;
-  //Add delete functionality
-}
-
 
 function session_query() {
   logger.debug("Getting sessions");
 
   var self = this;
   //Add query later on. I think a session model must be implemented first?
+}
+
+function session_delete(id) {
+  logger.debug("Removing session " + id);
+    var self = this;
+  //Add delete functionality
 }
 
 
