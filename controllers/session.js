@@ -18,7 +18,7 @@ exports.install = function() {
   logger.debug("Installing session restful route");
 
   
-  F.restful('/session', [], session_query, users_get, session_post, session_delete);
+  F.restful('/sessions', [], session_query, users_get, session_post, session_delete);
 };
 
 function session_query() {
@@ -32,6 +32,12 @@ function session_delete(id) {
   logger.debug("Removing session " + id);
     var self = this;
   //Add delete functionality
+}
+
+function session_get(id) {
+  logger.debug("getting session " + id);
+    var self = this;
+  //Add get functionality
 }
 
 
