@@ -16,10 +16,8 @@ var util = require('util');
 
 exports.install = function () {
   logger.debug("Installing session restful route");
-
-  
-  F.restful('/sessions', [], session_query, session_get, session_post, session_delete);
-}
+  F.restful('/sessions', [], session_query, session_get, session_save, session_delete);
+};
 
 function session_query() {
   logger.debug("Query sessions");
@@ -30,38 +28,36 @@ function session_query() {
 
 function session_delete(id) {
   logger.debug("Removing session " + id);
-    var self = this;
+
+  var self = this;
   //Add delete functionality
 }
 
 function session_get(id) {
-    logger.debug("getting session " + id);
-    var self = this;
-    
-    
+  logger.debug("getting session " + id);
+
+  var self = this;
   //Add get functionality
 }
 
 
-function session_post(id) {
+function session_save(id) {
   var self = this;
-  logger.debug("entered logging statement");
 
   if (id) {
-    var updates = {Username:"DummyUN", Password:"DummyPW"};
     logger.debug("Updating a session with id %s", id);
-
     //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
 
-      self.json(updates);
-    }
-   else {
+  } else {
+    // TODO: Implement request data validation
+    var updates = {
+      _id: '1234567890abcdef',
+      token: 'aoiu4nb728ba2f',
+      timestamp: new Date() / 1000
+    };
 
-    logger.debug("Saving session id " + id);
-
-    // else portion
-
-      
-    }
+    logger.debug("Saving new session", updates);
+    self.json(updates);
   }
+}
 
