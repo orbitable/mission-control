@@ -16,52 +16,57 @@ var util = require('util');
 
 exports.install = function () {
   logger.debug("Installing session restful route");
-
-  
-  F.restful('/sessions', [], session_query, session_get, session_post, session_delete);
-}
+  F.restful('/sessions', [], session_query, session_get, session_save, session_delete);
+};
 
 function session_query() {
   logger.debug("Query sessions");
 
   var self = this;
+  
+    
   //Add query later on. I think a session model must be implemented first?
 }
 
 function session_delete(id) {
   logger.debug("Removing session " + id);
-    var self = this;
-  //Add delete functionality
+
+  var self = this;
+  
+    if (id) {
+        logger.debug("Throwing error");
+        return self.throw501();
+    } else {
+        logger.debug("Delete Called without specifying id, doing nothing...");
+    }
 }
 
 function session_get(id) {
-    logger.debug("getting session " + id);
-    var self = this;
-    
-    
+  logger.debug("getting session " + id);
+
+  var self = this;
   //Add get functionality
 }
 
 
-function session_post(id) {
+function session_save(id) {
   var self = this;
-  logger.debug("entered logging statement");
-
+    logger.debug("Entering Post");
   if (id) {
-    
+
     logger.debug("Updating a session with id %s", id);
+    //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
 
-    }
-   else {
+  } else {
+    // TODO: Implement request data validation
+    var updates = {
+      _id: '1234567890abcdef',
+      token: 'aoiu4nb728ba2f',
+      timestamp: new Date() / 1000
+    };
 
-    logger.debug("Saving session id " + id);
-       
-    var updates = {Username:"DummyUN", Password:"DummyPW"};
-       
+    logger.debug("Saving new session", updates);
     self.json(updates);
-    // else portion
-
-      
-    }
   }
+}
 
