@@ -14,15 +14,15 @@
 
 var util = require('util');
 
-exports.install = function() {
+exports.install = function () {
   logger.debug("Installing session restful route");
 
   
-  F.restful('/sessions', [], session_query, users_get, session_post, session_delete);
-};
+  F.restful('/sessions', [], session_query, session_get, session_post, session_delete);
+}
 
 function session_query() {
-  logger.debug("Getting sessions");
+  logger.debug("Query sessions");
 
   var self = this;
   //Add query later on. I think a session model must be implemented first?
@@ -35,15 +35,17 @@ function session_delete(id) {
 }
 
 function session_get(id) {
-  logger.debug("getting session " + id);
+    logger.debug("getting session " + id);
     var self = this;
+    
+    
   //Add get functionality
 }
 
 
 function session_post(id) {
   var self = this;
-  
+  logger.debug("entered logging statement");
 
   if (id) {
     var updates = {Username:"DummyUN", Password:"DummyPW"};
@@ -52,14 +54,14 @@ function session_post(id) {
     //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
 
       self.json(updates);
-    });
-  } else {
+    }
+   else {
 
     logger.debug("Saving session id " + id);
 
     // else portion
 
       
-    });
+    }
   }
-}
+
