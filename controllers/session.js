@@ -18,7 +18,7 @@ exports.install = function() {
   logger.debug("Installing session restful route");
 
   
-  F.restful('/session', [], session_query, session_delete, session_post);
+  F.restful('/session', [], session_query, users_get, session_post, session_delete);
 };
 
 function session_query() {
@@ -40,12 +40,12 @@ function session_post(id) {
   
 
   if (id) {
-    var updates = self.json;
+    var updates = {"Username":"DummyUN", "Password":"DummyPW"};
     logger.debug("Updating a session with id %s", id);
 
     //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
 
-      self.json(doc);
+      self.json(updates);
     });
   } else {
 
@@ -53,7 +53,7 @@ function session_post(id) {
 
     // else portion
 
-      self.json(doc);
+      
     });
   }
 }

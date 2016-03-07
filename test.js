@@ -12,4 +12,4 @@
  * specific language governing permissions and limitations under the License.
  */
 
-require('total.js').http('test');
+require('total.js').http('debug');
