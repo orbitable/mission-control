@@ -46,7 +46,7 @@ function session_post(id) {
   
 
   if (id) {
-    var updates = {"Username":"DummyUN", "Password":"DummyPW"};
+    var updates = {Username:"DummyUN", Password:"DummyPW"};
     logger.debug("Updating a session with id %s", id);
 
     //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
