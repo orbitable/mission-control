@@ -52,13 +52,7 @@ function session_post(id) {
 
     logger.debug("Saving session id " + id);
 
-    Simulation.create(self.body, function(err, doc) {
-
-      if (err) {
-        logger.error("Unable to create session: " + err);
-        self.throw400(err);
-        return;
-      }
+    // else portion
 
       self.json(doc);
     });
