@@ -1,4 +1,4 @@
-﻿var winston = require('winston');
+var winston = require('winston');
 
 // The log level can be set via the environment or configuration
 var loglevel = process.env.LOG_LEVEL || F.config.loglevel;
