@@ -26,40 +26,19 @@ function not_allowed() {
     return self.plain('');
 }
 
-function session_query() {
-  logger.debug("Query sessions");
-
-  var self = this;
-  //TODO: 
-    
-  //Add query later on. I think a session model must be implemented first?
-}
 
 function session_delete(id) {
-  logger.debug("Removing session " + id);
-
-  var self = this;
-  
-    if (id) {
-        logger.debug("Throwing error");
-        return self.throw501();
-    } else {
-        logger.debug("Delete Called without specifying id, doing nothing...");
-    }
+    logger.debug("Delete method not implemented. Throwing error");
+    var self = this;
+    return self.throw501();
+    
 }
 
-function session_get(id) {
-  logger.debug("getting session " + id);
-
-  var self = this;
-    //TODO
-  //Add get functionality
-}
 
 
 function session_save(id) {
   var self = this;
-    logger.debug("Entering Post");
+    logger.debug("Attempting to create new session...");
   if (id) {
 
     logger.debug("Updating a session with id %s", id);
@@ -73,7 +52,7 @@ function session_save(id) {
       timestamp: new Date() / 1000
     };
 
-    logger.debug("Saving new session", updates);
+    
     self.json(updates);
   }
 }
