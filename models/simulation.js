@@ -36,8 +36,8 @@ Body.statics.random = function(mass, radius, spread) {
   var vector = mongoose.model('Vector', Vector);
   return new this({
     position: vector.random(spread),
-    mass: _.sample(_.range(1, mass || 100)),
-    radius: _.sample(_.range(1, radius || 50))
+    mass: _.sample(_.range  (7.3476730 * Math.pow(10,22), mass   || 1.989 * Math.pow(10,30))),
+    radius: _.sample(_.range(6.3674447 * Math.pow(10,6),  radius || 6.955 * Math.pow(10,8)))
   });
 }
 
