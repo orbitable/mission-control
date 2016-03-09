@@ -79,9 +79,9 @@ function simulation_random() {
 
   var self       = this;
   var count      = self.query.count     || 100;
-  var mass       = self.query.maxMass   || 100;
-  var radius     = self.query.maxRadius || 25;
-  var spread     = self.query.spread    || 1000;
+  var mass       = self.query.maxMass   || 1.989 * Math.pow(10,30);
+  var radius     = self.query.maxRadius || 6.955 * Math.pow(10,8);
+  var spread     = self.query.spread    || 2 * 4.628 * Math.pow(10,12);
   var Simulation = MODEL('simulation').schema;
 
   self.json(Simulation.random(count, mass, radius, spread));
