@@ -18,11 +18,12 @@ var mongoose = require('mongoose');
 var Vector = new mongoose.Schema({x: {type: Number, default: 0}, y: {type: Number, default: 0}});
 
 Vector.statics.random = function(spread) {
-  spread = spread || 1000;
-  var range = _.range(spread / -2, spread / 2);
+  var range = spread || 2 * 4.628 * Math.pow(10,12);
+  var xPosition = (-1 * range) + (2 * Math.random() * range);
+  var yPosition = (-1 * range) + (2 * Math.random() * range);
 
-  return new this({x: _.sample(range), y: _.sample(range)});
-}
+  return new this({x: xPosition, y: yPosition});
+};
 
 var Body = mongoose.Schema({
         position: {type: Vector, required: true},
@@ -34,12 +35,19 @@ var Body = mongoose.Schema({
 
 Body.statics.random = function(mass, radius, spread) {
   var vector = mongoose.model('Vector', Vector);
+
+  // Constraints
+  var minMass = 7.3476730 * Math.pow(10,22);
+  var maxMass = mass || 1.989 * Math.pow(10,30);
+  var minRadius = 6.3674447 * Math.pow(10,6);
+  var maxRadius = radius || 6.955 * Math.pow(10,8);
+
   return new this({
     position: vector.random(spread),
-    mass: _.sample(_.range  (7.3476730 * Math.pow(10,22), mass   || 1.989 * Math.pow(10,30))),
-    radius: _.sample(_.range(6.3674447 * Math.pow(10,6),  radius || 6.955 * Math.pow(10,8)))
+    mass: Math.random() * (maxMass - minMass) + minMass,
+    radius: Math.random() * (maxRadius - minRadius) + minRadius
   });
-}
+};
 
 var Simulation = mongoose.Schema({ bodies: [Body] });
 
@@ -48,7 +56,7 @@ Simulation.statics.random = function(count, mass, radius, spread) {
   return new this({
     bodies: _.range(count || 100).map(() => body.random(mass, radius, spread))
   });
-}
+};
 
 exports.schema = mongoose.model('simulation', Simulation);
 exports.name = 'simulation';
