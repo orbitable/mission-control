@@ -16,14 +16,21 @@ var util = require('util');
 
 exports.install = function () {
   logger.debug("Installing session restful route");
-  F.restful('/sessions', [], session_query, session_get, session_save, session_delete);
+  F.restful('/sessions', [], not_allowed, not_allowed, session_save, session_delete);
 };
+
+function not_allowed() {
+    logger.debug("Calling on un-implemeneted method");
+    var self = this;
+    self.status = 405;
+    return self.plain('');
+}
 
 function session_query() {
   logger.debug("Query sessions");
 
   var self = this;
-  
+  //TODO: 
     
   //Add query later on. I think a session model must be implemented first?
 }
@@ -45,6 +52,7 @@ function session_get(id) {
   logger.debug("getting session " + id);
 
   var self = this;
+    //TODO
   //Add get functionality
 }
 
