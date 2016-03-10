@@ -42,7 +42,8 @@ function session_save(id) {
   if (id) {
 
     logger.debug("Updating a session with id %s", id);
-    //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
+    //TODO: Add checks to credentials and throw error if checks invalid
+    //return mock token if valid.
 
   } else {
     // TODO: Implement request data validation
