@@ -74,6 +74,10 @@ function simulation_query() {
   });
 }
 
+function bigNum(b,e) {
+  return b * Math.pow(10,e);
+}
+
 function simulation_random() {
   logger.debug("Randomingly generating simulation");
 
@@ -81,10 +85,11 @@ function simulation_random() {
   var count      = self.query.count     || 100;
   var mass       = self.query.maxMass   || 1.989 * Math.pow(10,30);
   var radius     = self.query.maxRadius || 6.955 * Math.pow(10,8);
-  var spread     = self.query.spread    || 2 * 4.628 * Math.pow(10,12);
+  var spread     = self.query.spread    || 0.0001 * 4.628 * Math.pow(10,12);
   var Simulation = MODEL('simulation').schema;
 
-  self.json(Simulation.random(count, mass, radius, spread));
+  self.json(Simulation.randomSystem(bigNum(1.988435,30),bigNum(6.955,8),10,bigNum(1.0,11),bigNum(5.9721986,24),bigNum(6.3674447,6),0.0));
+  //centerMass,centerRadius,bodyCount,ringStep,bodyMass,bodyRadius,chaos
 }
 
 function simulation_save(id) {
