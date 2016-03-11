@@ -76,7 +76,8 @@ var centerBody = function(mass, radius) {
         position: vector({x: 0, y: 0}),
         mass: mass,
         radius: radius,
-        density: 1410
+        density: 1410,
+        luminosity: _.sample(_.range(1,5))
     });
 };
 
