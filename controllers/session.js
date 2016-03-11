@@ -14,7 +14,11 @@
 
 var util = require('util');
 
+
+
+
 exports.install = function () {
+    
   logger.debug("Installing session restful route");
   F.restful('/sessions', [], not_allowed, not_allowed, session_save, session_delete);
 };
@@ -44,7 +48,7 @@ function session_save(id) {
     } else {
     //TODO: Add checks to credentials and throw error if checks invalid
     //return mock token if valid.
-    
+        
     //Populate schema with mock credentials first
     var Session = MODEL('session').schema;
     var m1 = MODEL('session').m1
@@ -52,7 +56,7 @@ function session_save(id) {
     
     //Add a couple of mock entries to populate our schema first
     Session.create(m1, function(err, doc) {
-
+        
       if (err) {
         logger.error("Unable to create session: " + err);
         self.throw400(err);
@@ -63,13 +67,13 @@ function session_save(id) {
     });
         
     Session.create(m2, function(err, doc) {
-
+        
       if (err) {
         logger.error("Unable to create session: " + err);
         self.throw400(err);
         return;
       }
-
+        
       self.json(doc);
     });
         
@@ -77,26 +81,33 @@ function session_save(id) {
     //compare credentials from body to mock credentials
     var Credentials = self.body
     Session.find(Credentials, function(err, doc) {
-
+       
     if (err) {
       logger.error("Encountered error finding username " + Credentials + ":" + err);
-      logger.debug(doc);
       self.throw400();
       return;
     }
 
     if (!doc) {
-      self.throw403();
+      self.status = 403;
       return;
     }
-    logger.debug(Credentials);
-    self.json(doc);
-    //Mock Token
-    var token = {tokenID : "13yasdd2245u67l"};
-    return token;
-  });
     
     
-  }
+        //I know this doesnt work, just a placeholder
+    if (doc.username == Credentials.username && doc.password == Credentials.password) {
+        self.json(doc);
+        logger.debug(Credentials.username);
+        //Mock Token
+        var token = {tokenID : "13yasdd2245u67l"};
+        return token;
+    }
+        else{
+            logger.error("Invalid credentials");
+            self.status = 403;
+            return
+        }
+    
+    });
 }
-
+}
