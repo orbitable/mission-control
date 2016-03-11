@@ -59,7 +59,5 @@ Simulation.statics.random = function(count, mass, radius, spread) {
   });
 };
 
-
-
 exports.schema = mongoose.model('simulation', Simulation);
 exports.name = 'simulation';

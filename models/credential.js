@@ -14,29 +14,11 @@
 
 var mongoose = require('mongoose');
 
-var body = mongoose.Schema({
-    username: {type: String, required: true},
-    password: {type: String, required: true}
+var Credential = mongoose.Schema({
+  username: {type: String, required: true, unique: true},
+  password: {type: String, required: true}
 });
 
-//TODO: Add fixture users for test logins
-
-var mockUser1 = {
-    username: 'Jerry',
-    password: 'jerry1'
-};
-
-var mockUser2 = {
-    username: 'Linda',
-    password: 'linda1'
-};
-
-
-
-
-exports.m1 = mockUser1;
-exports.m2 = mockUser2;
-exports.schema = mongoose.model('session', body);
-exports.name = 'session';
-
+exports.schema = mongoose.model('credential', Credential);
+exports.name = 'credential';
 
