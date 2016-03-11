@@ -15,6 +15,7 @@
 var _        = require('lodash');
 var mongoose = require('mongoose');
 
+
 var Vector = new mongoose.Schema({x: {type: Number, default: 0}, y: {type: Number, default: 0}});
 
 Vector.statics.random = function(spread) {
@@ -57,6 +58,8 @@ Simulation.statics.random = function(count, mass, radius, spread) {
     bodies: _.range(count || 100).map(() => body.random(mass, radius, spread))
   });
 };
+
+
 
 exports.schema = mongoose.model('simulation', Simulation);
 exports.name = 'simulation';

@@ -11,6 +11,7 @@
  * CONDITIONS OF ANY KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations under the License.
  */
+console.log("Start");
 var mongoose = require('mongoose');
 
 var body = mongoose.Schema({
@@ -20,6 +21,22 @@ var body = mongoose.Schema({
 
 //TODO: Add fixture users for test logins
 
+var mockUser1 = {
+    username: 'Jerry',
+    password: 'jerry1'
+};
+
+var mockUser2 = {
+    username: 'Linda',
+    password: 'linda1'
+};
+
+
+
+console.log("End");
+exports.m1 = mockUser1;
+exports.m2 = mockUser2;
 exports.schema = mongoose.model('session', body);
 exports.name = 'session';
+
 

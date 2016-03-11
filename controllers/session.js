@@ -37,24 +37,66 @@ function session_delete(id) {
 
 
 function session_save(id) {
-  var self = this;
+    var self = this;
     logger.debug("Attempting to create new session...");
-  if (id) {
-
-    logger.debug("Updating a session with id %s", id);
+    if (id) {
+        logger.debug("Updating a session with id %s", id);
+    } else {
     //TODO: Add checks to credentials and throw error if checks invalid
     //return mock token if valid.
-
-  } else {
-    // TODO: Implement request data validation
-    var updates = {
-      _id: '1234567890abcdef',
-      token: 'aoiu4nb728ba2f',
-      timestamp: new Date() / 1000
-    };
-
     
-    self.json(updates);
+    //Populate schema with mock credentials first
+    var Session = MODEL('session').schema;
+    var m1 = MODEL('session').m1
+    var m2 = MODEL('session').m2
+    
+    //Add a couple of mock entries to populate our schema first
+    Session.create(m1, function(err, doc) {
+
+      if (err) {
+        logger.error("Unable to create session: " + err);
+        self.throw400(err);
+        return;
+      }
+
+      self.json(doc);
+    });
+        
+    Session.create(m2, function(err, doc) {
+
+      if (err) {
+        logger.error("Unable to create session: " + err);
+        self.throw400(err);
+        return;
+      }
+
+      self.json(doc);
+    });
+        
+        
+    //compare credentials from body to mock credentials
+    var Credentials = self.body
+    Session.find(Credentials, function(err, doc) {
+
+    if (err) {
+      logger.error("Encountered error finding username " + Credentials + ":" + err);
+      logger.debug(doc);
+      self.throw400();
+      return;
+    }
+
+    if (!doc) {
+      self.throw403();
+      return;
+    }
+    logger.debug(Credentials);
+    self.json(doc);
+    //Mock Token
+    var token = {tokenID : "13yasdd2245u67l"};
+    return token;
+  });
+    
+    
   }
 }
 
