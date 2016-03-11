@@ -16,44 +16,50 @@ var util = require('util');
 
 exports.install = function () {
   logger.debug("Installing session restful route");
-  F.restful('/sessions', [], not_allowed, not_allowed, session_save, session_delete);
+  F.restful('/sessions', ['post', 'json'], not_allowed, not_allowed, session_save, session_delete);
 };
 
 function not_allowed() {
-    logger.debug("Calling on un-implemeneted method");
-    var self = this;
-    self.status = 405;
-    return self.plain('');
+  logger.debug("Calling on un-implemeneted method");
+  var self = this;
+  self.status = 405;
+  return self.plain('');
 }
-
 
 function session_delete(id) {
-    logger.debug("Delete method not implemented. Throwing error");
-    var self = this;
-    return self.throw501();
-    
+  logger.debug("Delete method not implemented. Throwing error");
+  var self = this;
+  return self.throw501();
 }
-
-
 
 function session_save(id) {
   var self = this;
-    logger.debug("Attempting to create new session...");
-  if (id) {
+  logger.debug("Attempting to create new session");
+  //TODO: Add checks to credentials and throw error if checks invalid
+  //return mock token if valid.
 
-    logger.debug("Updating a session with id %s", id);
-    //Add post information. STILL CONFUSED HOW TO SEND DATA WITHOUT IT! 
+  //Populate schema with mock credentials first
+  var Credential = MODEL('credential').schema;
 
-  } else {
-    // TODO: Implement request data validation
-    var updates = {
-      _id: '1234567890abcdef',
-      token: 'aoiu4nb728ba2f',
-      timestamp: new Date() / 1000
-    };
+  //compare credentials from body to mock credentials
+  Credential.findOne({"username": self.body.username}, function(err, doc) {
 
-    
-    self.json(updates);
-  }
+    if (err) {
+      logger.error("Encountered error finding username ", err);
+      return self.throw400();
+    }
+
+    if (!doc) {
+      logger.debug("Did not find matching username " + self.body.username);
+      return self.throw403();
+    }
+
+    if (doc.password == self.body.password) {
+      var token = {tokenID : "13yasdd2245u67l"};
+      return self.json(token);
+    } else {
+      logger.debug("Invalid credentials");
+      return self.throw403();
+    }
+  });
 }
-

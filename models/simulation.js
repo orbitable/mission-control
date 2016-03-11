@@ -15,6 +15,7 @@
 var _        = require('lodash');
 var mongoose = require('mongoose');
 
+
 var Vector = new mongoose.Schema({x: {type: Number, default: 0}, y: {type: Number, default: 0}});
 
 Vector.statics.random = function(spread) {
