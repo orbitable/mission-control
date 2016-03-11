@@ -25,6 +25,25 @@ Vector.statics.random = function(spread) {
   return new this({x: xPosition, y: yPosition});
 };
 
+Vector.statics.scalarProduct = function(vectorX,vectorY,factor) {
+    var vX = vectorX * factor;
+    var vY = vectorY * factor;
+    return new this({x: vX, y: vY});
+};
+
+Vector.statics.cross = function(vector) {
+    var vX = vector.y;
+    var vY = -vector.x;
+    return new this({x: vX, y: vY});
+};
+
+Vector.statics.add = function(aX,aY,bX,bY) {
+    var vX = aX + bX;
+    var vY = aY + bY;
+    return new this({x: vX, y: vY});
+};
+
+
 var Body = mongoose.Schema({
         position: {type: Vector, required: true},
         velocity: {type: Vector, default: {x: 0, y: 0}},
@@ -49,7 +68,21 @@ Body.statics.random = function(mass, radius, spread) {
   });
 };
 
+var centerBody = function(mass, radius) {
+    var body = mongoose.model('Body', Body);
+    var vector = mongoose.model('Vector', Vector);
+
+    return new body({
+        position: vector({x: 0, y: 0}),
+        mass: mass,
+        radius: radius,
+        density: 1410
+    });
+};
+
 var Simulation = mongoose.Schema({ bodies: [Body] });
+
+
 
 Simulation.statics.random = function(count, mass, radius, spread) {
   var body = mongoose.model('Body', Body);
@@ -58,5 +91,89 @@ Simulation.statics.random = function(count, mass, radius, spread) {
   });
 };
 
+var newOrbitingBody = function (centerBody,distance,mass,radius) {
+    var body = mongoose.model('Body', Body);
+    var vector = mongoose.model('Vector', Vector);
+
+    var position = getPointOnCircle(centerBody.position,distance);
+    var velocity = getTangent(centerBody.position,position);
+
+    return new body({
+        position: position,
+        velocity: vector.scalarProduct(velocity.x,velocity.y,getEscapeVelocity(centerBody.mass,distance)),
+        mass: mass,
+        radius: radius,
+        density: 5515
+    }); 
+};
+
+var G = 6.674 * Math.pow(10,-11);
+var PI2 = Math.PI * 2.0;
+
+var getEscapeVelocity = function (centerMass,distance) {
+    return Math.sqrt(G * centerMass/distance);
+};
+var getTangent = function (centerPosition,bodyPosition) {
+    var vector = mongoose.model('Vector', Vector);
+
+    var cross = vector.cross(
+            vector.add(
+                bodyPosition.x,
+                bodyPosition.y,
+                -centerPosition.x,
+                -centerPosition.y
+            )
+        );
+
+    var normFactor = 1.0 / Math.sqrt(Math.pow(cross.x,2.0) + Math.pow(cross.y,2.0));
+    return vector.scalarProduct(cross.x,cross.y,normFactor);
+};
+
+var getPointOnCircle = function (centerPosition,distance) {
+    var vector = mongoose.model('Vector', Vector);
+
+    var rX = (Math.random()-0.5);
+    var rY = (Math.random()-0.5);
+    var normFactor = distance / Math.sqrt(Math.pow(rX,2.0) + Math.pow(rY,2.0));
+
+    return new vector({
+        x: centerPosition.x + rX * normFactor,
+        y: centerPosition.y + rY * normFactor
+    });
+};
+
+var getChaos = function(factor) {
+    factor = Math.min(factor,1.0);
+    factor = Math.max(factor,0.0);
+    return (Math.random() * factor * 2.0) + (1.0 - factor);
+};
+
+Simulation.statics.randomSystem = function(centerMass,centerRadius,bodyCount,ringStep,bodyMass,bodyRadius,chaos) {
+    //var body = mongoose.model('Body', Body);
+
+    var bodies = [];
+    var solarBody = centerBody(centerMass,centerRadius);
+    bodies.push(solarBody);
+
+    var distance = ringStep;
+    for(var i = 0; i < bodyCount; i++) {
+        bodies.push(
+            newOrbitingBody(
+                solarBody,
+                distance,
+                bodyMass,
+                bodyRadius
+            )
+        );
+        distance += ringStep * getChaos(chaos);
+    }
+
+
+    return new this({
+        bodies: bodies
+    });
+};
+
 exports.schema = mongoose.model('simulation', Simulation);
 exports.name = 'simulation';
+
