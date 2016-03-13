@@ -12,12 +12,15 @@
     "url": "git+https://github.com/orbitable/mission-control.git"
   },
   "license": "Apache-2.0",
-  "contributors": ["Benjamin Campbell <benji@benjica.com>"],
+  "contributors": [
+    "Benjamin Campbell <benji@benjica.com>"
+  ],
   "bugs": {
     "url": "https://github.com/orbitable/mission-control/issues"
   },
   "homepage": "https://github.com/orbitable/mission-control#readme",
   "dependencies": {
+    "bcrypt": "^0.8.5",
     "lodash": "^4.5.1",
     "mongoose": "4.4.3",
     "total.js": "^1.9.6",
