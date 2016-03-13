@@ -93,7 +93,7 @@ Simulation.statics.random = function(count, mass, radius, spread) {
   });
 };
 
-var newOrbitingBody = function (centerBody,distance,mass,radius) {
+var newOrbitingBody = function (centerBody,distance,mass,radius, chaos) {
     var body = mongoose.model('Body', Body);
     var vector = mongoose.model('Vector', Vector);
 
@@ -102,7 +102,7 @@ var newOrbitingBody = function (centerBody,distance,mass,radius) {
 
     return new body({
         position: position,
-        velocity: vector.scalarProduct(velocity.x,velocity.y,getEscapeVelocity(centerBody.mass,distance)),
+        velocity: vector.scalarProduct(velocity.x,velocity.y,getEscapeVelocity(centerBody.mass,distance) * getChaos(chaos)),
         mass: mass,
         radius: radius,
         density: 5515
@@ -145,9 +145,14 @@ var getPointOnCircle = function (centerPosition,distance) {
 };
 
 var getChaos = function(factor) {
+    
     factor = Math.min(factor,1.0);
     factor = Math.max(factor,0.0);
-    return (Math.random() * factor * 2.0) + (1.0 - factor);
+    
+    var min = (1.0-factor)/1.0
+    var max = 1.0/(1.0-factor)
+    
+    return (Math.random() * (max-min)) + min;
 };
 
 Simulation.statics.randomSystem = function(centerMass,centerRadius,bodyCount,ringStep,bodyMass,bodyRadius,chaos) {
@@ -163,8 +168,9 @@ Simulation.statics.randomSystem = function(centerMass,centerRadius,bodyCount,rin
             newOrbitingBody(
                 solarBody,
                 distance,
-                bodyMass,
-                bodyRadius
+                bodyMass * getChaos(chaos),
+                bodyRadius * getChaos(chaos),
+                chaos
             )
         );
         distance += ringStep * getChaos(chaos);

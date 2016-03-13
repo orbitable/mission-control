@@ -88,7 +88,7 @@ function simulation_random() {
   var spread     = self.query.spread    || 0.0001 * 4.628 * Math.pow(10,12);
   var Simulation = MODEL('simulation').schema;
 
-  self.json(Simulation.randomSystem(bigNum(1.988435,30),bigNum(6.955,8),10,bigNum(1.0,11),bigNum(5.9721986,24),bigNum(6.3674447,6),0.0));
+  self.json(Simulation.randomSystem(bigNum(1.988435,30),bigNum(6.955,8),50,bigNum(0.3,11),bigNum(5.9721986,24),bigNum(6.3674447,6),0.1));
   //centerMass,centerRadius,bodyCount,ringStep,bodyMass,bodyRadius,chaos
 }
 
