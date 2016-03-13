@@ -13,6 +13,21 @@
  */
 
 var mongoose = require('mongoose');
-mongoose.connect(F.config.mongopath);
 
-global.mongoose =  mongoose;
+function mongooseUri(host, database, user, password) {
+  password = password === undefined ? '' : ':' + password;
+  user     = user     === undefined ? '' : user + password + '@';
+  database = database === undefined ? '' : database;
+
+  return "mongodb://" + user + host + "/" + database;
+}
+
+var host     = process.env.MONGO_HOST     || F.config.mongoHost     || 'localhost';
+var user     = process.env.MONGO_USER     || F.config.mongoUser;
+var password = process.env.MONGO_PASSWORD || F.config.mongoPassword;
+var database = process.env.MONGO_DATABASE || F.config.mongoDatabase || 'default';
+
+var mongoPath = mongooseUri(host, database, user, password);
+
+mongoose.connect(mongoPath);
+global.mongoose = mongoose;

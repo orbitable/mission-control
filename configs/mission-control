@@ -1,4 +1,4 @@
-mongopath     : mongodb://mongodb.orbitable.tech/default
-loglevel      : debug
-default-ip    : 0.0.0.0
-default-port  : 8001
+mongoHost      : mongodb.orbitable.tech
+loglevel       : debug
+default-ip     : 0.0.0.0
+default-port   : 8001

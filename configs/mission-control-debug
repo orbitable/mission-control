@@ -1,1 +1,5 @@
-cors : http://localhost:8000,http://0.0.0.0:8000
+mongoUser     : debug
+mongoPassword : debug
+mongoDatabase : debug
+cors      : http://localhost:8000,http://0.0.0.0:8000
+

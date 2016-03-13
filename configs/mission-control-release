@@ -1,3 +1,4 @@
-mongopath     : mongodb://mongo/default
-cors          : http://localhost:8000,http://0.0.0.0:8000,http://demo.orbitable.tech,https://demo.orbitable.tech
-loglevel      : notice
+mongoHost     : mongo
+mongoDatabase : release
+cors           : http://localhost:8000,http://0.0.0.0:8000,http://demo.orbitable.tech,https://demo.orbitable.tech
+loglevel       : notice
