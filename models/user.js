@@ -28,19 +28,23 @@ UserSchema.pre('save', function(next) {
 
   if (!user.isModified('password')) return next();
     
-    bcrypt.genSalt(10, function(err, salt) {
+    bcrypt.genSalt(ROUNDS, function(err, salt) {
+        if (err){
+            logger.error("Cannot generate salt: ", err);
+        }
+        else{
     bcrypt.hash(user.password, salt, function(err, hash) {
         if (err) return next(err);
         
       user.password = hash;
       next();
-    });
+    });}
 });
-  
+    
 });
 
 UserSchema.methods.isValidPassword = function(givenPassword, callback) {
-  bcrypt.compareSync(givenPassword, this.password, cb);
+  bcrypt.compare(givenPassword, this.password, cb);
 };
 
 UserSchema.methods.toJSON = function() {
