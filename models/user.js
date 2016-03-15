@@ -13,8 +13,7 @@
  */
 
 var mongoose = require('mongoose');
-var bcrypt   = require('bcrypt');
-
+var bcrypt   = require('bcryptjs');
 var ROUNDS = 10;
 
 var UserSchema = new mongoose.Schema({
@@ -28,17 +27,20 @@ UserSchema.pre('save', function(next) {
   var user = this;
 
   if (!user.isModified('password')) return next();
-
-  bcrypt.genSalt(ROUNDS, function(err, salt) {
-    if (err) return next(err);
-
+    
+    bcrypt.genSalt(ROUNDS, function(err, salt) {
+        if (err){
+            logger.error("Cannot generate salt: ", err);
+        }
+        else{
     bcrypt.hash(user.password, salt, function(err, hash) {
-      if (err) return next(err);
+        if (err) return next(err);
         
       user.password = hash;
       next();
-    });
-  });
+    });}
+});
+    
 });
 
 UserSchema.methods.isValidPassword = function(givenPassword, callback) {
