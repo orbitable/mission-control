@@ -146,7 +146,7 @@ var getPointOnCircle = function (centerPosition,distance) {
 
 var getChaos = function(factor) {
     
-    factor = Math.min(factor,1.0);
+    factor = Math.min(factor,0.999999999);
     factor = Math.max(factor,0.0);
     
     var min = (1.0-factor)/1.0
