@@ -81,15 +81,18 @@ function bigNum(b,e) {
 function simulation_random() {
   logger.debug("Randomingly generating simulation");
 
-  var self       = this;
-  var count      = self.query.count     || 100;
-  var mass       = self.query.maxMass   || 1.989 * Math.pow(10,30);
-  var radius     = self.query.maxRadius || 6.955 * Math.pow(10,8);
-  var spread     = self.query.spread    || 0.0001 * 4.628 * Math.pow(10,12);
+  var self         = this;
+  var centerMass   = self.query.centerMass   || bigNum(1.988435,30);
+  var centerRadius = self.query.centerRadius || bigNum(6.955,8);
+  var count        = self.query.count        || 50;
+  var ringStep     = self.query.ringStep     || bigNum(0.3,11);
+  var bodyMass     = self.query.bodyMass     || bigNum(5.9721986,24);
+  var bodyRadius   = self.query.bodyRadius   || bigNum(6.3674447,6);
+  var chaos        = self.query.chaos        || 0.1;
+
   var Simulation = MODEL('simulation').schema;
 
-  self.json(Simulation.randomSystem(bigNum(1.988435,30),bigNum(6.955,8),50,bigNum(0.3,11),bigNum(5.9721986,24),bigNum(6.3674447,6),0.1));
-  //centerMass,centerRadius,bodyCount,ringStep,bodyMass,bodyRadius,chaos
+  self.json(Simulation.randomSystem(centerMass,centerRadius,bodyCount,ringStep,bodyMass,bodyRadius,chaos));
 }
 
 function simulation_save(id) {
