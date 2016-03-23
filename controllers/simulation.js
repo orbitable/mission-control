@@ -86,7 +86,7 @@ function simulation_random() {
   var ringStep     = parseFloat(self.query.ringStep)      || 0.3e11;
   var bodyMass     = parseFloat(self.query.bodyMass)      || 5.9721986e24;
   var bodyRadius   = parseFloat(self.query.bodyRadius)    || 6.3674447e6;
-  var chaos        = parseFloat(self.query.chaos)         || 0.1;
+  var chaos        = parseFloat(self.query.chaos)         || 0.5;
 
   var Simulation = MODEL('simulation').schema;
 
