@@ -74,25 +74,23 @@ function simulation_query() {
   });
 }
 
-function bigNum(b,e) {
-  return b * Math.pow(10,e);
-}
-
 function simulation_random() {
   logger.debug("Randomingly generating simulation");
 
   var self         = this;
-  var centerMass   = self.query.centerMass   || bigNum(1.988435,30);
-  var centerRadius = self.query.centerRadius || bigNum(6.955,8);
-  var count        = self.query.count        || 50;
-  var ringStep     = self.query.ringStep     || bigNum(0.3,11);
-  var bodyMass     = self.query.bodyMass     || bigNum(5.9721986,24);
-  var bodyRadius   = self.query.bodyRadius   || bigNum(6.3674447,6);
-  var chaos        = self.query.chaos        || 0.1;
+
+  // Query parameters are mapped to simulation generation || <default value>
+  var centerMass   = parseFloat(self.query.centerMass)    || 1.988435e30;
+  var centerRadius = parseFloat(self.query.centerRadius)  || 6.955e8;
+  var count        = parseInt(self.query.count)           || 50;
+  var ringStep     = parseFloat(self.query.ringStep)      || 0.3e11;
+  var bodyMass     = parseFloat(self.query.bodyMass)      || 5.9721986e24;
+  var bodyRadius   = parseFloat(self.query.bodyRadius)    || 6.3674447e6;
+  var chaos        = parseFloat(self.query.chaos)         || 0.1;
 
   var Simulation = MODEL('simulation').schema;
 
-  self.json(Simulation.randomSystem(centerMass,centerRadius,bodyCount,ringStep,bodyMass,bodyRadius,chaos));
+  self.json(Simulation.randomSystem(centerMass, centerRadius, count, ringStep, bodyMass, bodyRadius, chaos));
 }
 
 function simulation_save(id) {
