@@ -148,10 +148,16 @@ var getChaos = function(factor) {
     
     
     factor = Math.min(factor,0.999999999); // Prevent value >= 1 to prevent division by 0 and unwanted values
-    factor = Math.max(factor,0.0);
+    factor = Math.max(factor,0.0); // Prevent value < 0 to prevent unwanted chaos effects
     
-    var min = (1.0-factor)/1.0
-    var max = 1.0/(1.0-factor)
+    // Initial domain is 1 and a number greater than 1
+    var min = 1
+    var max = 1.0/(1.0-factor) 
+    
+    if (_.sample([false,true])) { // 50% chance of setting domain from 0 to 1
+        min = (1.0-factor)/1.0
+        max = 1
+    }
     
     return (Math.random() * (max-min)) + min;
 };
