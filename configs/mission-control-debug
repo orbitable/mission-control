@@ -1,5 +1,6 @@
 mongoUser     : debug
 mongoPassword : debug
 mongoDatabase : debug
+catchphrase : orbitableisfun
 cors      : http://localhost:8000,http://0.0.0.0:8000
 
