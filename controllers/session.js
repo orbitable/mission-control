@@ -13,6 +13,7 @@
  */
 
 var util = require('util');
+var jwt = require('jsonwebtoken');
 
 exports.install = function () {
   logger.debug("Installing session restful route");
@@ -55,8 +56,11 @@ function session_save(id) {
     }
 
     if (doc.password == self.body.password) {
-      var token = {tokenID : "13yasdd2245u67l"};
-      return self.json(token);
+      //Utilize the jwt framework to handle token.
+        var token = jwt.sign(doc, config.catchphrase, {
+            expiresInMinutes: 1440 //just a default 24 hours
+        });
+        return self.json(token);
     } else {
       logger.debug("Invalid credentials");
       return self.throw403();
