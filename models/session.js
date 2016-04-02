@@ -13,12 +13,13 @@
  */
 
 var mongoose = require('mongoose');
+var Schema = mongoose.Schema;
 
-var Credential = mongoose.Schema({
-  username: {type: String, required: true, unique: true},
-  password: {type: String, required: true}
+var Session = mongoose.Schema({
+  owner: {type: Schema.Types.ObjectId, ref: 'user', required: true},
+  expiration: {type: Date, default: (new Date().getTime()) + (3600 * 1000)}
 });
 
-exports.schema = mongoose.model('credential', Credential);
-exports.name = 'credential';
+exports.schema = mongoose.model('session', Session);
+exports.name = 'session';
 
