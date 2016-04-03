@@ -12,12 +12,9 @@
  * specific language governing permissions and limitations under the License.
  */
 
-var util = require('util');
-
 exports.install = function() {
   logger.debug("Installing users restful route");
-
-  F.restful('/users', ['#cors'], methodNotAllowed, methodNotAllowed, user_save, methodNotAllowed); 
+  F.restful('/users', ['#cors', 'OPTIONS'], methodNotAllowed, methodNotAllowed, user_save, methodNotAllowed); 
 };
 
 function methodNotAllowed() {
@@ -35,6 +32,12 @@ function user_save(id) {
     return self.throw501();
   } else {
     logger.debug("users: creating new user");
+
+    // TODO: Deal with PREFLIGHT
+    if (self.req.method === 'OPTIONS') {
+      self.plain('');
+      return;
+    }
 
     User.create(self.body, function(err, doc) {
 
