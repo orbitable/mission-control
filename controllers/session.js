@@ -20,6 +20,7 @@ exports.install = function () {
 function methodNotAllowed() {
   logger.debug("users: method not allowed");
   this.status = 405;
+    //TODO: Adjust to return json message
   return this.plain('405: Method not supported');
 }
 
@@ -57,17 +58,20 @@ function session_save(id) {
 
     if (err) {
       logger.error("Encountered error finding username ", err);
+        //TODO: Adjust to return json message
       return self.throw400();
     }
 
     if (!user) {
       logger.debug('No such user ', self.body.username);
+        //TODO: Adjust to return json message
       return self.throw404();
     }
 
     user.isValidPassword(self.body.password, function(err, isValidPassword) {
       if (err) {
         logger.error("error comparing passwords", err);
+          //TODO: Adjust to return json message
         return self.throw400();
       }
 
@@ -75,6 +79,7 @@ function session_save(id) {
         Session.create({owner: user._id}, function(err, session) {
             if (err) {
               logger.error('Failed to create session', err);
+                //TODO: Adjust to return json message
               return self.throw500();
             }
 
@@ -82,6 +87,7 @@ function session_save(id) {
               Session.populate(session, {path: 'owner'}, function(err, session) {
                 if (err) {
                   logger.error('Failed to populate session', err);
+                    //TODO: Adjust to return json message
                   return self.throw500();
                 }
 
@@ -91,6 +97,7 @@ function session_save(id) {
           });
       } else { 
         logger.debug('Unsuccessful login attempt for', self.body.username);
+          //TODO: Adjust to return json message
         return self.throw404();
       }
     });

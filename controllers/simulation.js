@@ -49,6 +49,7 @@ function simulation_get(id) {
 
     if (err) {
       logger.error("Encountered error finding simulation " + id + ":" + err);
+        //TODO: Adjust to return json message
       self.throw400();
       return;
     }
@@ -104,6 +105,7 @@ function simulation_save(id) {
     Simulation.findByIdAndUpdate(id, { $set: updates }, function(err, doc) {
       if (err) {
         logger.error("Unable to update simulation: %s", id, update);
+          //TODO: Adjust to return json message
       }
 
       self.json(doc);
@@ -116,6 +118,7 @@ function simulation_save(id) {
 
       if (err) {
         logger.error("Unable to create simulation: " + err);
+          //TODO: Adjust to return json message
         self.throw400(err);
         return;
       }

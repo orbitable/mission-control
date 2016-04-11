@@ -20,6 +20,7 @@ exports.install = function() {
 function methodNotAllowed() {
   logger.debug("users: method not allowed");
   this.status = 405;
+    //TODO: Adjust to return json message
   return this.plain('405: Method not supported');
 }
 

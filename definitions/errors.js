@@ -11,17 +11,7 @@
  * CONDITIONS OF ANY KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations under the License.
  */
-var winston = require('winston');
 
-// The log level can be set via the environment or configuration
-var loglevel = process.env.LOG_LEVEL || F.config.loglevel;
-
-var logger = new (winston.Logger)({
-    transports: [
-        new (winston.transports.Console)({ level: loglevel, timestamp: true })
-    ]
-});
-
-logger.handleExceptions();
-
-global.logger = logger;
+//TODO: Write functionality to return specific json string based upon status code as input.
+//Example: input, status code = 404
+//          Output = { status: 404, message: "Error: username not found", description: "The username specified is not valid or does not exist"}
