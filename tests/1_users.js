@@ -13,47 +13,19 @@
  */
 
 exports.run = function() {
-  F.assert('Getting users not supported',
-    '/users',
-    ['get'],
-    function(error, data, code, headers) {
-      assert.ok(code === 405, 'did not get 405; got' + code);
-    }
-  );
-
-  F.assert('Deleting users is not supported',
-    '/users/fake_id',
-    ['delete'],
-    function(error, data, code, headers) {
-      assert.ok(code === 405, 'did not get 405; got' + code);
-    }
-  );
-
-  F.assert('Getting user not supported',
-    '/users/fake_id',
-    ['get'],
-    function(error, data, code, headers) {
-      assert.ok(code === 405, 'did not get 405; got' + code);
-    }
-  );
-
-  F.assert('Updating a user',
-    '/users/123',
-    ['put'],
-    function(error, data, code, headers) {
-      assert.ok(code === 501, 'did not get a 501; Got ' + code);
-    },
-
-    {username: new Date(), password: new Date(), email: new Date()}
-  );
-
-  F.assert('Creating a user',
-    '/users',
-    ['post', 'json'],
-    function(error, data, code, headers) {
-      assert.ok(code === 200, 'did not get a 200; Got ' + code);
-    },
-
-    {username: new Date(), password: new Date(), email: new Date()}
-   );
+  F.assert('Getting users not supported', '/users', ['get'],  function(error, data, code, headers) {
+    assert.ok(code === 405, 'did not get 405');
+  });
+  F.assert('Deleting users is not supported', '/users/fake_id', ['delete'],  function(error, data, code, headers) {
+    assert.ok(code === 405, 'did not get 405');
+  });
+  F.assert('Getting user not supported', '/users/fake_id', ['get'],  function(error, data, code, headers) {
+    assert.ok(code === 405, 'did not get 405');
+  });
+  F.assert('Updating a user', '/users/123', ['put'], function(error, data, code, headers) {
+    assert.ok(code === 501, 'did not get a 501; Got ' + code);
+  }, {username: new Date(), password: new Date(), email: new Date()});
+  F.assert('Creating a user', '/users', ['post', 'json'], function(error, data, code, headers) {
+    assert.ok(code === 200, 'did not get a 200; Got ' + code);
+  }, {username: new Date(), password: new Date(), email: new Date()});
 };

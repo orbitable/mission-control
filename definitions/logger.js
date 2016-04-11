@@ -4,9 +4,9 @@ var winston = require('winston');
 var loglevel = process.env.LOG_LEVEL || F.config.loglevel;
 
 var logger = new (winston.Logger)({
-  transports: [
-      new (winston.transports.Console)({level: loglevel, timestamp: true}),
-  ],
+    transports: [
+        new (winston.transports.Console)({ level: loglevel, timestamp: true })
+    ]
 });
 
 logger.handleExceptions();
