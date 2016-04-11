@@ -19,18 +19,23 @@ var ROUNDS = 10;
 var UserSchema = new mongoose.Schema({
   // TODO: Validate email format
   username: {type: String, required: 'An username is required'},
-  email:    {type: String, required: 'An email address is required', trim: true, unique: true},
-  password: {type: String, required: 'A password is required'}
+  email:    {
+    type: String,
+    required: 'An email address is required',
+    trim: true,
+    unique: true
+  },
+  password: {type: String, required: 'A password is required'},
 });
 
 UserSchema.pre('save', function(next) {
   var user = this;
 
-  if (!user.isModified('password')) return next();
+  if (!user.isModified('password')) { return next(); }
 
   bcrypt.genSalt(ROUNDS, function(err, salt) {
-    if (err){
-      logger.error("Cannot generate salt: ", err);
+    if (err) {
+      logger.error('Cannot generate salt: ', err);
     } else {
       bcrypt.hash(user.password, salt, function(err, hash) {
         if (err) {
@@ -57,4 +62,3 @@ UserSchema.methods.toJSON = function() {
 
 exports.schema = mongoose.model('user', UserSchema);
 exports.name = 'user';
-

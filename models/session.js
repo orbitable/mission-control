@@ -17,9 +17,8 @@ var Schema = mongoose.Schema;
 
 var Session = mongoose.Schema({
   owner: {type: Schema.Types.ObjectId, ref: 'user', required: true},
-  expiration: {type: Date, default: (new Date().getTime()) + (3600 * 1000)}
+  expiration: {type: Date, default: (new Date().getTime()) + (3600 * 1000)},
 });
 
 exports.schema = mongoose.model('session', Session);
 exports.name = 'session';
-
