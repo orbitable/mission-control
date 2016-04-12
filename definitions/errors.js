@@ -12,6 +12,16 @@
  * specific language governing permissions and limitations under the License.
  */
 
-//TODO: Write functionality to return specific json string based upon status code as input.
-//Example: input, status code = 404
-//          Output = { status: 404, message: "Error: username not found", description: "The username specified is not valid or does not exist"}
+var errors = function (sCode, reason, description) {
+    
+    var jstring = JSON.stringify(
+        {
+            code : sCode,
+            reason : reason,
+            description : description
+        });
+    
+    return jstring
+};
+
+global.errors = errors

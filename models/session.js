@@ -16,8 +16,9 @@ var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
 var Session = mongoose.Schema({
-  owner: {type: Schema.Types.ObjectId, ref: 'user', required: true},
-  expiration: {type: Date, default: (new Date().getTime()) + (3600 * 1000)}
+  username: {type: String, required: 'An username is required'},
+  email:    {type: String, required: 'An email address is required', trim: true, unique: true},
+  password: {type: String, required: 'A password is required'}
 });
 
 exports.schema = mongoose.model('session', Session);

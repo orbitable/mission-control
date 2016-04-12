@@ -21,7 +21,7 @@ function methodNotAllowed() {
   logger.debug("users: method not allowed");
   this.status = 405;
     //TODO: Adjust to return json message
-  return this.plain('405: Method not supported');
+  return errorResponse(this.status, 'API Call not Supported', 'The current API call is not supported. Only SAVE and DELETE are with this endpoint');
 }
 
 function user_save(id) {

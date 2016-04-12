@@ -11,6 +11,7 @@
  * CONDITIONS OF ANY KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations under the License.
  */
+var errorResponse = require
 
 exports.install = function () {
   logger.debug("Installing sessions endpoint");
@@ -21,7 +22,7 @@ function methodNotAllowed() {
   logger.debug("users: method not allowed");
   this.status = 405;
     //TODO: Adjust to return json message
-  return this.plain('405: Method not supported');
+  return errorResponse(this.status, 'API Call not Supported', 'The current API call is not supported. Only SAVE and DELETE are with this endpoint');
 }
 
 function session_delete(id) {
@@ -90,8 +91,9 @@ function session_save(id) {
                     //TODO: Adjust to return json message
                   return self.throw500();
                 }
-
-                return self.json(session);
+                  logger.debug(errors(405, 'API Call not Supported', 'The current API call is not supported. Only SAVE and DELETE are with this endpoint'));
+                //return self.json(session);
+                  
               });
             }
           });
