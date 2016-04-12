@@ -15,14 +15,30 @@
 var util = require('util');
 
 exports.install = function() {
-  logger.debug("Installing simulations restful route");
+  logger.debug('Installing simulations restful route');
 
-  F.route('/simulations/random', simulation_random, ['#cors']);
-  F.restful('/simulations', ['#cors'], simulation_query, simulation_get, simulation_save, simulation_delete);
+  F.route('/simulations/random', randomSimulation, ['#cors']);
+  F.route('/users/{userId}/simulations', querySimulation, ['#cors']);
+
+  // Accept OPTIONS requests
+  F.route('/simulations',
+    function() { this.plain('okay');},
+    ['#cors', 'OPTIONS']);
+  F.route('/simulations/{userId}',
+    function() { this.plain('okay');},
+    ['#cors', 'OPTIONS']);
+
+  F.restful('/simulations',
+    ['#cors'],
+    querySimulation,
+    getSimulation,
+    saveSimulation,
+    deleteSimulation);
+
 };
 
-function simulation_delete(id) {
-  logger.debug("Removing simulation " + id);
+function deleteSimulation(id) {
+  logger.debug('Removing simulation ' + id);
 
   var self = this;
   var Simulation = MODEL('simulation').schema;
@@ -39,8 +55,8 @@ function simulation_delete(id) {
   return self.throw404();
 }
 
-function simulation_get(id) {
-  logger.debug("Getting simulation " + id);
+function getSimulation(id) {
+  logger.debug('Getting simulation ' + id);
 
   var self = this;
   var Simulation = MODEL('simulation').schema;
@@ -48,7 +64,7 @@ function simulation_get(id) {
   Simulation.findById(id, function(err, doc) {
 
     if (err) {
-      logger.error("Encountered error finding simulation " + id + ":" + err);
+      logger.error('Encountered error finding simulation ' + id + ':' + err);
       self.throw400();
       return;
     }
@@ -63,19 +79,45 @@ function simulation_get(id) {
   });
 }
 
-function simulation_query() {
-  logger.debug("Getting simulations");
+function querySimulation(userId) {
 
   var self = this;
   var Simulation = MODEL('simulation').schema;
 
-  Simulation.find(function(err, docs) {
-    self.json(docs);
-  });
+  if (userId) {
+    logger.debug('Getting simulations for user id ' + userId);
+    var User = MODEL('user').schema;
+
+    User.findById(userId, function(err, user) {
+      if (err) {
+        logger.error(err); return self.throw500(err);
+      }
+
+      if (!user) { return self.throw404(user); }
+
+      Simulation.find({createdBy: user._id}, function(err, simulations) {
+        if (err) {
+          logger.error(err); return self.throw500(err);
+        }
+
+        return self.json(simulations);
+      });
+
+    });
+  } else {
+    logger.debug('Getting simulations');
+    Simulation.find(function(err, simulations) {
+      if (err) {
+        logger.error(err); return self.throw500(err);
+      }
+
+      self.json(simulations);
+    });
+  }
 }
 
-function simulation_random() {
-  logger.debug("Randomingly generating simulation");
+function randomSimulation() {
+  logger.debug('Randomingly generating simulation');
 
   var self         = this;
 
@@ -90,32 +132,40 @@ function simulation_random() {
 
   var Simulation = MODEL('simulation').schema;
 
-  self.json(Simulation.randomSystem(centerMass, centerRadius, count, ringStep, bodyMass, bodyRadius, chaos));
+  self.json(Simulation.randomSystem(
+    centerMass,
+    centerRadius,
+    count,
+    ringStep,
+    bodyMass,
+    bodyRadius,
+    chaos)
+  );
 }
 
-function simulation_save(id) {
+function saveSimulation(id) {
   var self = this;
   var Simulation = MODEL('simulation').schema;
 
   if (id) {
     var updates = self.json;
-    logger.debug("Updating a simulation with id %s", id);
+    logger.debug('Updating a simulation with id %s', id);
 
-    Simulation.findByIdAndUpdate(id, { $set: updates }, function(err, doc) {
+    Simulation.findByIdAndUpdate(id, {$set: updates}, function(err, doc) {
       if (err) {
-        logger.error("Unable to update simulation: %s", id, update);
+        logger.error('Unable to update simulation: %s', id, update);
       }
 
       self.json(doc);
     });
   } else {
 
-    logger.debug("Saving simulation id " + id);
+    logger.debug('Saving simulation id ' + id);
 
     Simulation.create(self.body, function(err, doc) {
 
       if (err) {
-        logger.error("Unable to create simulation: " + err);
+        logger.error('Unable to create simulation: ' + err);
         self.throw400(err);
         return;
       }
