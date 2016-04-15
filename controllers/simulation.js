@@ -88,7 +88,7 @@ function querySimulation(userId) {
     logger.debug('Getting simulations for user id ' + userId);
     var User = MODEL('user').schema;
 
-    User.findById(userId, function(err, user) {
+    User.find({$or: [{username: userId}]}, function(err, user) {
       if (err) {
         logger.error(err); return self.throw500(err);
       }
@@ -147,6 +147,8 @@ function saveSimulation(id) {
   var self = this;
   var Simulation = MODEL('simulation').schema;
 
+  logger.debug('saving simulation');
+
   if (id) {
     var updates = self.json;
     logger.debug('Updating a simulation with id %s', id);
@@ -159,8 +161,7 @@ function saveSimulation(id) {
       self.json(doc);
     });
   } else {
-
-    logger.debug('Saving simulation id ' + id);
+    logger.debug('Saving new simulation');
 
     Simulation.create(self.body, function(err, doc) {
 
