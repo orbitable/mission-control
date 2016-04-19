@@ -85,6 +85,8 @@ var centerBody = function(mass, radius) {
 };
 
 var Simulation = mongoose.Schema({
+  title: {type: String, default: 'Unknown Simulation'},
+  description: {type: String, default: 'No description was provided for this simulation.'},
   bodies: [BodySchema],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
