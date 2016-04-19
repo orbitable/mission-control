@@ -34,7 +34,8 @@ exports.install = function() {
 function methodNotAllowed() {
   logger.debug('users: method not allowed');
   this.status = 405;
-  return this.plain('405: Method not supported');
+    //TODO: Adjust to return json message
+  return errorResponse(this.status, 'API Call not Supported', 'The current API call is not supported. Only SAVE and DELETE are with this endpoint');
 }
 
 function userSave(id) {

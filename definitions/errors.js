@@ -11,17 +11,14 @@
  * CONDITIONS OF ANY KIND, either express or implied.  See the License for the
  * specific language governing permissions and limitations under the License.
  */
-var winston = require('winston');
 
-// The log level can be set via the environment or configuration
-var loglevel = process.env.LOG_LEVEL || F.config.loglevel;
+function clientError(self, statusCode, reason, description) {
+  logger.debug(statusCode, reason);
 
-var logger = new (winston.Logger)({
-  transports: [
-      new (winston.transports.Console)({level: loglevel, timestamp: true}),
-  ],
-});
+  self.statusCode = statusCode;
+  self.json({code: statusCode, reason: reason, description: description});
+}
 
-logger.handleExceptions();
 
-global.logger = logger;
+global.clientError = clientError;
+
