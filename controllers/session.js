@@ -13,20 +13,35 @@
  */
 var errorResponse = require
 
-exports.install = function () {
-  logger.debug("Installing sessions endpoint");
-  F.restful('/sessions', ['#cors', 'OPTIONS'], methodNotAllowed, methodNotAllowed, session_save, session_delete);
+exports.install = function() {
+  logger.debug('Installing sessions endpoint');
+
+  // Accept OPTIONS requests
+  F.route('/sessions',
+    function() { this.plain('okay');},
+    ['#cors', 'OPTIONS']);
+
+  F.route('/sessions/{sessionId}',
+    function() { this.plain('okay');},
+    ['#cors', 'OPTIONS']);
+
+  F.restful('/sessions',
+    ['#cors'],
+    methodNotAllowed,
+    methodNotAllowed,
+    saveSession,
+    deleteSession);
 };
 
 function methodNotAllowed() {
-  logger.debug("users: method not allowed");
+  logger.debug('users: method not allowed');
   this.status = 405;
     //TODO: Adjust to return json message
   return errorResponse(this.status, 'API Call not Supported', 'The current API call is not supported. Only SAVE and DELETE are with this endpoint');
 }
 
-function session_delete(id) {
-  logger.debug("Attempting to invalidate a session");
+function deleteSession(id) {
+  logger.debug('Attempting to invalidate a session');
   var self = this;
   var Session = MODEL('session').schema;
 
@@ -42,66 +57,59 @@ function session_delete(id) {
 
 }
 
-function session_save(id) {
+function saveSession(id) {
+  logger.debug('Attempting to create a new session');
+
   var self = this;
-
-  // TODO: Allow preflights
-  if (self.req.method === 'OPTIONS') {
-    return self.plain('');
-  }
-
-  logger.debug("Attempting to create a new session");
-
   var User = MODEL('user').schema;
   var Session = MODEL('session').schema;
 
-  User.findOne({ $or: [ {username: self.body.username}, {email: self.body.username}]} , function(err, user) {
+  User.findOne(
+    {$or: [{username: self.body.username}, {email: self.body.username}]},
+    function(err, user) {
 
-    if (err) {
-      logger.error("Encountered error finding username ", err);
-        //TODO: Adjust to return json message
-      return self.throw400();
-    }
-
-    if (!user) {
-      logger.debug('No such user ', self.body.username);
-        //TODO: Adjust to return json message
-      return self.throw404();
-    }
-
-    user.isValidPassword(self.body.password, function(err, isValidPassword) {
       if (err) {
-        logger.error("error comparing passwords", err);
-          //TODO: Adjust to return json message
+
+        logger.error('Encountered error finding username ', err);
         return self.throw400();
       }
 
-      if (isValidPassword) {
-        Session.create({owner: user._id}, function(err, session) {
-            if (err) {
-              logger.error('Failed to create session', err);
-                //TODO: Adjust to return json message
-              return self.throw500();
-            }
-
-            if (session) {
-              Session.populate(session, {path: 'owner'}, function(err, session) {
-                if (err) {
-                  logger.error('Failed to populate session', err);
-                    //TODO: Adjust to return json message
-                  return self.throw500();
-                }
-                  logger.debug(errors(405, 'API Call not Supported', 'The current API call is not supported. Only SAVE and DELETE are with this endpoint'));
-                //return self.json(session);
-                  
-              });
-            }
-          });
-      } else { 
-        logger.debug('Unsuccessful login attempt for', self.body.username);
-          //TODO: Adjust to return json message
+      if (!user) {
+        logger.debug('No such user ', self.body.username);
         return self.throw404();
       }
+
+      user.isValidPassword(self.body.password, function(err, isValidPassword) {
+        if (err) {
+          logger.error('error comparing passwords', err);
+          return self.throw400();
+        }
+
+        if (isValidPassword) {
+          Session.create({owner: user._id}, function(err, session) {
+              if (err) {
+                logger.error('Failed to create session', err);
+                return self.throw500();
+              }
+
+              if (session) {
+                Session.populate(session,
+                  {path: 'owner'},
+                  function(err, session) {
+                    if (err) {
+                      logger.error('Failed to populate session', err);
+                      return self.throw500();
+                    }
+
+                    return self.json(session);
+                  }
+                );
+              }
+            });
+        } else {
+          logger.debug('Unsuccessful login attempt for', self.body.username);
+          return self.throw404();
+        }
+      });
     });
-  });
 }

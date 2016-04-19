@@ -12,16 +12,13 @@
  * specific language governing permissions and limitations under the License.
  */
 
-var errors = function (sCode, reason, description) {
-    
-    var jstring = JSON.stringify(
-        {
-            code : sCode,
-            reason : reason,
-            description : description
-        });
-    
-    return jstring
-};
+function clientError(self, statusCode, reason, description) {
+  logger.debug(statusCode, reason);
 
-global.errors = errors
+  self.statusCode = statusCode;
+  self.json({code: statusCode, reason: reason, description: description});
+}
+
+
+global.clientError = clientError;
+
