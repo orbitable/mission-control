@@ -15,7 +15,6 @@
 var util = require('util');
 
 exports.install = function() {
-  
   logger.debug('Installing simulations restful route');
 
   F.route('/simulations/random', randomSimulation, ['#cors']);
@@ -65,11 +64,14 @@ function getSimulation(id) {
   Simulation.findById(id, function(err, doc) {
 
     if (err) {
-      return clientError(self, 400, err,  'Encountered error finding simulation ' + id + ':' + err);
+      logger.error('Encountered error finding simulation ' + id + ':' + err);
+      self.throw400();
+      return;
     }
 
     if (!doc) {
-      return clientError(self, 404, 'The given simulation does not exist', 'The given id did not match an existing document');
+      self.throw404();
+      return;
     }
 
     self.json(doc);
@@ -153,9 +155,7 @@ function saveSimulation(id) {
 
     Simulation.findByIdAndUpdate(id, {$set: updates}, function(err, doc) {
       if (err) {
-
         logger.error('Unable to update simulation: %s', id, update);
-
       }
 
       self.json(doc);
@@ -166,9 +166,7 @@ function saveSimulation(id) {
     Simulation.create(self.body, function(err, doc) {
 
       if (err) {
-
         logger.error('Unable to create simulation: ' + err);
-
         self.throw400(err);
         return;
       }
