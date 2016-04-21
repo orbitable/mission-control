@@ -16,7 +16,7 @@ gulp.task('clean', ['lint', 'syntax']);
 // Starts the develop mode of Totaljs and monitors for JS changes
 // restarting when changes are detected.
 gulp.task('develop', function() {
-  nodemon({script: 'debug.js', ext: 'js', tasks: ['clean']});
+  nodemon({script: 'debug.js', ext: 'js'});
 });
 
 gulp.task('lint', function() {
