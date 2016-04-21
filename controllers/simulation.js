@@ -87,14 +87,14 @@ function querySimulation(userId) {
     logger.debug('Getting simulations for user id ' + userId);
     var User = MODEL('user').schema;
 
-    User.find({$or: [{username: userId}]}, function(err, user) {
+    User.findOne({username: userId}, function(err, u) {
       if (err) {
         logger.error(err); return self.throw500(err);
       }
 
-      if (!user) { return self.throw404(user); }
+      if (!u) { return self.throw404(u); }
 
-      Simulation.find({createdBy: user._id}, function(err, simulations) {
+      Simulation.find({createdBy: u._id}, function(err, simulations) {
         if (err) {
           logger.error(err); return self.throw500(err);
         }
