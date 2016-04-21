@@ -12,8 +12,6 @@
  * specific language governing permissions and limitations under the License.
  */
 
-var util = require('util');
-
 exports.install = function() {
   logger.debug('Installing simulations restful route');
 
@@ -65,6 +63,7 @@ function getSimulation(id) {
 
     if (err) {
       logger.error('Encountered error finding simulation ' + id + ':' + err);
+
       self.throw400();
       return;
     }
@@ -155,7 +154,7 @@ function saveSimulation(id) {
 
     Simulation.findByIdAndUpdate(id, {$set: updates}, function(err, doc) {
       if (err) {
-        logger.error('Unable to update simulation: %s', id, update);
+        logger.error('Unable to update simulation: %s', id, updates);
       }
 
       self.json(doc);

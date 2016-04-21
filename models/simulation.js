@@ -86,7 +86,10 @@ var centerBody = function(mass, radius) {
 
 var Simulation = mongoose.Schema({
   title: {type: String, default: 'Unknown Simulation'},
-  description: {type: String, default: 'No description was provided for this simulation.'},
+  description: {
+    type: String,
+    default: 'No description was provided for this simulation.'
+  },
   bodies: [BodySchema],
   createdBy: {
     type: mongoose.Schema.Types.ObjectId,
@@ -121,7 +124,6 @@ var newOrbitingBody = function(centerBody, distance, mass, radius, chaos) {
 };
 
 var G = 6.674 * Math.pow(10, -11);
-var PI2 = Math.PI * 2.0;
 
 var getEscapeVelocity = function(centerMass, distance) {
   return Math.sqrt(G * centerMass / distance);

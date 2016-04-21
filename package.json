@@ -4,8 +4,8 @@
   "description": "A back end server for orchestrating n-body simulations",
   "main": "app.js",
   "scripts": {
-    "start": "node --harmony release.js",
-    "test": "node --harmony test.js"
+    "start": "node release.js",
+    "test": "gulp test"
   },
   "repository": {
     "type": "git",
@@ -25,5 +25,14 @@
     "mongoose": "4.4.3",
     "total.js": "^1.9.6",
     "winston": "^2.2.0"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-jscs": "^3.0.2",
+    "gulp-jshint": "^2.0.0",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-shell": "^0.5.2",
+    "jshint": "^2.9.2",
+    "jshint-stylish": "^2.1.0"
   }
 }
