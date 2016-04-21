@@ -17,13 +17,12 @@ var testData = {
   bodies: [{position: {x: 0, y: 0}, mass: 0}],
   createdBy: '56e5a496e787f9e648429611'
 };
-var testItem;
 
 exports.run = function() {
   F.assert('Simulation API GET',
     '/simulations',
     ['get'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code === 200, 'did not get 200');
     }
   );
@@ -31,7 +30,7 @@ exports.run = function() {
   F.assert('Simulation API GET bad id',
     '/simulations/bad_id',
     ['get'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code === 400, 'did not get a 400 when using bad id: ' + code);
     }
   );
@@ -39,7 +38,7 @@ exports.run = function() {
   F.assert('Simulation API GET',
     '/simulations/' + fakeId,
     ['get'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code === 404, 'did not get 404 for non existent simulation');
     }
   );
@@ -47,7 +46,7 @@ exports.run = function() {
   F.assert('Simulation API POST missing position',
     '/simulations',
     ['post', 'json'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code == 400, 'did not get a bad request(400): ' + code);
     },
 
@@ -60,7 +59,7 @@ exports.run = function() {
   F.assert('Simulation API POST missing mass',
     '/simulations',
     ['post', 'json'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code == 400, 'did not get a bad request(400): ' + code);
     },
 
@@ -73,7 +72,7 @@ exports.run = function() {
   F.assert('Simulation API POST',
     '/simulations',
     ['post', 'json'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(
         code == 200,
         'did not get a success (200): (' + code + ') ' + error
@@ -86,7 +85,7 @@ exports.run = function() {
   F.assert('Simulation API DELETE',
     '/simulations/' + fakeId,
     ['delete', 'json'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code == 404, 'expected delete to return 404: ' + code);
     }
   );
@@ -94,7 +93,7 @@ exports.run = function() {
   F.assert('Simulation API DELETE',
     '/simulations/' + fakeId,
     ['delete', 'json'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code == 404, 'expected delete to return 404; got ' + code);
     }
   );
@@ -102,7 +101,7 @@ exports.run = function() {
   F.assert('Simulation API PUT',
     '/simulations/' + fakeId,
     ['put', 'json'],
-    function(error, data, code, headers) {
+    function(error, data, code) {
       assert.ok(code == 404, 'expected put to return 200; got ' + code);
     }
   );

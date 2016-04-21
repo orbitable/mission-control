@@ -1,0 +1,12 @@
+{
+  "esversion": 6,
+  "globals": {
+    "assert": false,
+    "F": false,
+    "logger": false,
+    "MODEL": false
+  },
+  "node": true,
+  "undef": true,
+  "unused": true
+}

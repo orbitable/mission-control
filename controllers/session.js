@@ -55,7 +55,7 @@ function deleteSession(id) {
 
 }
 
-function saveSession(id) {
+function saveSession() {
   logger.debug('Attempting to create a new session');
 
   var self = this;
