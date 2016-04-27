@@ -41,7 +41,7 @@ function deleteNote(id) {
 
     return self.throw404();
   });
-};
+}
 
 function getNote(id) {
   logger.debug('Getting note ' + id);
@@ -66,7 +66,7 @@ function getNote(id) {
     self.json(note);
     return;
   });
-};
+}
 
 function queryNote(simulationId) {
 
@@ -94,7 +94,7 @@ function queryNote(simulationId) {
       self.json(notes);
     });
   }
-};
+}
 
 function saveNote(id) {
   var self = this;
@@ -127,5 +127,5 @@ function saveNote(id) {
       self.json(doc);
     });
   }
-};
+}
 

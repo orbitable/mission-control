@@ -21,7 +21,7 @@ var VectorSchema = new mongoose.Schema({
 
 var NoteSchema = new mongoose.Schema({
   duration: {type: Number, default: 10000},
-  position: {type: VectorSchema, default: {x: 0, y: 0}}, 
+  position: {type: VectorSchema, default: {x: 0, y: 0}},
   simulation: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'simulation',
