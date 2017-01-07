@@ -2,5 +2,5 @@ mongoUser     : test
 mongoPassword : test
 mongoDatabase : test
 loglevel      : debug
-default-ip    : 127.0.0.1
+default-ip    : localhost
 default-port  : 8001

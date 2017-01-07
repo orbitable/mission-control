@@ -23,10 +23,10 @@ var _ = require('lodash');
  * the origin.
  */
 F.middleware('cors', function(req, res, next, options, controller) {
-
   if (controller) {
     // Parse the cors field of the current config
     var allowedOrigins = (F.config.cors || '').split(',');
+    allowedOrigins.push('localhost');
 
     // Validate request origin agains cors whitelist
     var isOrigin = (uri) => uri === req.headers.origin;

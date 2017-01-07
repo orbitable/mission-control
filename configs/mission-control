@@ -1,5 +1,5 @@
 mongoHost      : mongodb.orbitable.tech
 loglevel       : debug
-default-ip     : 0.0.0.0
+default-ip     : localhost
 default-port   : 8001
 default-request-length : 1024

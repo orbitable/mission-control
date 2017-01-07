@@ -22,14 +22,21 @@ function mongooseUri(host, database, user, password) {
   return 'mongodb://' + user + host + '/' + database;
 }
 
+
 var host     = process.env.MONGO_HOST     || F.config.mongoHost || 'localhost';
 var user     = process.env.MONGO_USER     || F.config.mongoUser;
 var password = process.env.MONGO_PASSWORD || F.config.mongoPassword;
 var database = process.env.MONGO_DATABASE ||
   F.config.mongoDatabase ||
   'default';
-
+host = 'localhost';
+database = 'orbitable';
+user= '';
+password = '';
+console.log("TEST:",host,user,password,database);
 var mongoPath = mongooseUri(host, database, user, password);
-
-mongoose.connect(mongoPath);
+mongoPath = 'mongodb://localhost:27017'
+mongoose.connect(mongoPath,function() {
+  console.log("Mongoose Connected:",mongoPath);
+});
 global.mongoose = mongoose;

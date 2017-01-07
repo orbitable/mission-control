@@ -75,14 +75,17 @@ function queryNote(simulationId) {
 
   if (simulationId) {
     logger.debug('Getting notes for simulation id ' + simulationId);
+    if (simulationId === 'random') {
+      return self.json([]);
+    } else {
+      Note.find({simulation: simulationId}, function(err, notes) {
+        if (err) {
+          logger.error(err); return self.throw500(err);
+        }
 
-    Note.find({simulation: simulationId}, function(err, notes) {
-      if (err) {
-        logger.error(err); return self.throw500(err);
-      }
-
-      return self.json(notes);
-    });
+        return self.json(notes);
+      });
+    }
 
   } else {
     logger.debug('Getting notes');
