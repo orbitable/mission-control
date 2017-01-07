@@ -1,4 +1,4 @@
 mongoHost     : mongo
 mongoDatabase : release
-cors           : http://ec2-54-164-149-18.compute-1.amazonaws.com
+cors           : http://ec2-34-196-102-11.compute-1.amazonaws.com
 loglevel       : notice
