@@ -1,4 +1,4 @@
 mongoUser     : debug
 mongoPassword : debug
 mongoDatabase : debug
-cors                   : http://localhost:80,http://ec2-54-164-149-18.compute-1.amazonaws.com:80
+cors                   : http://0.0.0.0:80,http://ec2-54-164-149-18.compute-1.amazonaws.com:80

@@ -27,7 +27,7 @@ F.middleware('cors', function(req, res, next, options, controller) {
   if (controller) {
     // Parse the cors field of the current config
     var allowedOrigins = (F.config.cors || '').split(',');
-    allowedOrigins.push('localhost');
+    allowedOrigins.push('0.0.0.0');
     allowedOrigins.push('ec2-54-164-149-18.compute-1.amazonaws.com');
 
     // Validate request origin agains cors whitelist

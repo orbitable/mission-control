@@ -25,18 +25,18 @@ function mongooseUri(host, database, user, password) {
 }
 
 
-var host     = process.env.MONGO_HOST     || F.config.mongoHost || 'localhost';
+var host     = process.env.MONGO_HOST     || F.config.mongoHost || '0.0.0.0';
 var user     = process.env.MONGO_USER     || F.config.mongoUser;
 var password = process.env.MONGO_PASSWORD || F.config.mongoPassword;
 var database = process.env.MONGO_DATABASE ||
   F.config.mongoDatabase ||
   'default';
-host = 'localhost';
+host = '0.0.0.0';
 database = 'orbitable';
 user= '';
 password = '';
 var mongoPath = mongooseUri(host, database, user, password);
-mongoPath = 'mongodb://localhost:27017'
+mongoPath = 'mongodb://0.0.0.0:27017'
 mongoose.connect(mongoPath,function(err) {
   console.log("Mongoose Connected:",mongoPath);
 });
