@@ -36,7 +36,9 @@ password = '';
 console.log("TEST:",host,user,password,database);
 var mongoPath = mongooseUri(host, database, user, password);
 mongoPath = 'mongodb://localhost:27017'
-mongoose.connect(mongoPath,function() {
+mongoose.connect(mongoPath,function(err) {
+  if (err) console.log(err);
   console.log("Mongoose Connected:",mongoPath);
 });
+console.log("TYPE:",typeof(mongoose));
 global.mongoose = mongoose;
