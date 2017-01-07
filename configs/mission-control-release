@@ -1,4 +1,4 @@
 mongoHost     : mongo
 mongoDatabase : release
-cors           : http://localhost:80,http://localhost:80,http://demo.orbitable.tech,https://demo.orbitable.tech
+cors           : http://localhost:80,http://ec2-54-164-149-18.compute-1.amazonaws.com:80,http://demo.orbitable.tech,https://demo.orbitable.tech
 loglevel       : notice
