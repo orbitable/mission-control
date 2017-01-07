@@ -23,6 +23,7 @@ var _ = require('lodash');
  * the origin.
  */
 F.middleware('cors', function(req, res, next, options, controller) {
+  console.log('middleware:','cors');
   if (controller) {
     // Parse the cors field of the current config
     var allowedOrigins = (F.config.cors || '').split(',');

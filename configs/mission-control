@@ -1,4 +1,4 @@
-mongoHost      : mongodb.orbitable.tech
+mongoHost      : mongodb.ec2-54-89-110-47.compute-1.amazonaws.com
 loglevel       : debug
 default-ip     : localhost
 default-port   : 80
