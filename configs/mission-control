@@ -1,5 +1,5 @@
 mongoHost      : mongodb.ec2-54-89-110-47.compute-1.amazonaws.com
 loglevel       : debug
-default-ip     : localhost
+default-ip     : 0.0.0.0
 default-port   : 80
 default-request-length : 1024
