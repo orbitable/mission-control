@@ -17,8 +17,6 @@ var okay = function() { this.plain('okay'); };
 exports.install = function() {
   logger.debug('Installing notes restful route');
 
-  F.route('/',function() {console.log("TEST");});
-
   // Accept OPTIONS requests
   F.route('/notes', okay, ['#cors', 'OPTIONS']);
   F.route('/notes/{note}', okay, ['#cors', 'OPTIONS']);
