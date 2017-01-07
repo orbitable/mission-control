@@ -12,4 +12,4 @@
  * specific language governing permissions and limitations under the License.
  */
 
-require('total.js').http('release',{port:80});
+require('total.js').http('release',{port:8000});

@@ -12,8 +12,6 @@
  * specific language governing permissions and limitations under the License.
  */
 
-console.log("Initializing Mongoose...");
-
 var mongoose = require('mongoose');
 
 function mongooseUri(host, database, user, password) {
